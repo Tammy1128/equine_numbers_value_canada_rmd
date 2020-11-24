@@ -1,6 +1,10 @@
 ---
 title: "Historical horse population in Canada"
 bibliography: reference.bib
+params:
+  province: "Alberta"
+  valuemax: 806200
+  valuemin: 87000
 output: 
   github_document:
     toc: true
@@ -67,13 +71,13 @@ max_horses <- horse_pop %>%
             Minimum = min(Value))
 knitr::kable(max_horses, caption = "Table 1. This is a summary of the historical population of horses data set")
 ```
-From above, we know that the maximum value in `r max_horses$Province[1]` is `r max_horses$Maximum[1]` and the minimum value in `r max_horses$Province[1]` is `r max_horses$Minimum[1]`
+From above, we know that the maximum value in `r params$province` is `r params$valuemax` and the minimum value in `r params$province` is `r params$valuemin`
 
-Below we zoom in and look at the province of `r max_horses$Province[1]`:
+Below we zoom in and look at the province of `r params$province`:
 
 ```{r plot province, fig.width=5, fig.height=4, fig.cap="Figure 2. Historical number of horses per province in Canada", out.width='50%'}
 province_plot <- horse_pop %>% 
-  filter(GEO == "Alberta") %>% 
+  filter(GEO == params$province) %>% 
   ggplot(aes(x = Ref_Date, y = Value)) +
   geom_point() +
   geom_line() +
